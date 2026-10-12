@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buenos Momentos Eventos - Presupuestador Gastronómico</title>
+
+  <style>
+    :root {
+      --bg-main: #fcfaf7;
+      --text-main: #2d2621;
+      --text-muted: #6b6055;
+      --border-soft: #e2d7cb;
+      --brand-terracotta: #b3533b;
+      --brand-olive: #5b6e4e;
+      --brand-mustard: #d49b3d;
+      --brand-navy: #324755;
+      --card-config: #f5efe6;
+      --card-menu: #fbf7f0;
+      --card-cocina: #fdf5eb;
+      --card-logistica: #eff4f4;
+      --card-resultado: #f2f6f1;
+      --input-bg: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      padding: 16px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo-img {
+      max-width: 170px;
+      height: auto;
+      border-radius: 12px;
+      margin-bottom: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .brand-badge {
+      display: inline-block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.3px;
+      color: var(--brand-terracotta);
+      background-color: #f1e2d7;
+      border: 1px solid #dfc7b8;
+      padding: 3px 12px;
+      border-radius: 12px;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 13.5px;
+      margin-top: 2px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .tabs button {
+      flex: 1;
+      padding: 12px 8px;
+      font-size: 13.5px;
+      font-weight: 600;
+      border: 1px solid var(--border-soft);
+      border-radius: 8px;
+      background-color: #ffffff;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tabs button.tab-active {
+      background-color: var(--brand-olive) !important;
+      color: #ffffff !important;
+      border-color: var(--brand-olive) !important;
+    }
+
+    .tab-content { display: none; }
+
+    .desktop-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .section-card {
+      padding: 16px 18px;
+      border-radius: 10px;
+      border: 1px solid var(--border-soft);
+      margin-bottom: 16px;
+    }
+
+    .card-config-bg { background-color: var(--card-config); }
+    .card-menu-bg { background-color: var(--card-menu); }
+    .card-cocina-bg { background-color: var(--card-cocina); }
+    .card-logistica-bg { background-color: var(--card-logistica); }
+    .card-resultado-bg { background-color: var(--card-resultado); }
+
+    h2 {
+      color: var(--brand-olive);
+      font-size: 15px;
+      margin-bottom: 12px;
+      font-weight: 700;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      padding-bottom: 6px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      align-items: end;
+    }
+
+    @media (max-width: 768px) {
+      .desktop-row, .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+
+    label {
+      margin-bottom: 4px;
+      font-weight: 600;
+      font-size: 12.5px;
+      color: var(--text-main);
+      min-height: 18px;
+    }
+
+    .field-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      min-height: 16px;
+      line-height: 1.25;
+    }
+
+    input, select {
+      width: 100%;
+      height: 38px;
+      padding: 6px 10px;
+      font-size: 13.5px;
+      border-radius: 6px;
+      border: 1px solid #d2c5b6;
+      background-color: var(--input-bg);
+      color: var(--text-main);
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--brand-olive);
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .checkbox-container input {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: var(--brand-olive);
+    }
+
+    .action-button {
+      width: 100%;
+      padding: 13px;
+      font-size: 14.5px;
+      font-weight: 700;
+      background-color: var(--brand-terracotta);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.2s;
+    }
+    .action-button:hover { background-color: #9a432d; }
+
+    .secondary-button {
+      width: 100%;
+      padding: 12px;
+      font-size: 13.5px;
+      font-weight: 600;
+      background-color: #ffffff;
+      color: var(--brand-olive);
+      border: 1px solid var(--brand-olive);
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .status-msg {
+      display: none;
+      margin-top: 10px;
+      padding: 9px;
+      border-radius: 6px;
+      font-size: 13px;
+      text-align: center;
+      font-weight: 600;
+    }
+    .status-msg.success { background-color: #e3ede1; color: #2e5927; }
+    .status-msg.warning { background-color: #f7e6e1; color: #9c3c26; }
+
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px dashed #cbdbd1;
+      padding: 7px 0;
+      font-size: 13.5px;
+    }
+
+    .highlight-card {
+      background-color: #ffffff;
+      border: 1px solid #b6ccb1;
+      padding: 14px;
+      border-radius: 8px;
+      margin-top: 14px;
+      text-align: center;
+    }
+    .highlight-card .price {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--brand-olive);
+      margin-top: 2px;
+    }
+
+    .decision-box {
+      background-color: #ffffff;
+      border: 1px dashed var(--brand-olive);
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+    .info-card {
+      background-color: #ffffff;
+      border: 1px solid #e0d5c8;
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Modal en pantalla */
+    #modalCliente {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.75);
+      z-index: 9999;
+      overflow-y: auto;
+      padding: 16px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .modal-sheet {
+      background: #ffffff;
+      max-width: 650px;
+      margin: 10px auto;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      color: #222;
+    }
+
+    .comercial-header {
+      text-align: center;
+      border-bottom: 2px solid var(--brand-olive);
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+    }
+
+    .comercial-header h2 {
+      font-size: 20px;
+      color: var(--brand-terracotta);
+      margin: 0;
+      border: none;
+    }
+
+    .comercial-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 7px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 13px;
+    }
+
+    .comercial-total {
+      background: #fbf7f0;
+      border: 1px solid #ebd7c1;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      margin: 14px 0;
+    }
+
+    .comercial-total .big-price {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--brand-olive);
+    }
+
+    /* SECCIÓN EXCLUSIVA DE IMPRESIÓN (1 PÁGINA A4 PERFECTA) */
+    #seccionImpresion {
+      display: none;
+    }
+
+    @page {
+      size: A4 portrait;
+      margin: 15mm;
+    }
+
+    @media print {
+      html, body {
+        width: 100%;
+        height: auto;
+        background: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      /* Ocultar aplicación y modal */
+      .container, #modalCliente {
+        display: none !important;
+      }
+
+      /* Mostrar solo área de impresión */
+      #seccionImpresion {
+        display: block !important;
+        width: 100% !important;
+        max-width: 180mm !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <img src="logo.png" alt="Buenos Momentos Eventos" class="logo-img" onerror="this.style.display='none'">
+      <br>
+      <div class="brand-badge">Gestión Gastronómica Familiar</div>
+      <div class="subtitle">Presupuestador Profesional de Servicios de Catering</div>
+    </header>
+
+    <div class="tabs">
+      <button type="button" id="btn-config" class="tab-active" onclick="switchTab('config')">⚙ Configuración de Tarifas</button>
+      <button type="button" id="btn-evento" onclick="switchTab('evento')">📋 Ficha del Servicio</button>
+      <button type="button" id="btn-resultado" onclick="switchTab('resultado')">🍽️ Cotización & Decisiones</button>
+    </div>
+
+    <!-- PESTAÑA 1: CONFIGURACIÓN DE TARIFAS -->
+    <div id="tab-config-content" class="tab-content" style="display: block;">
+      <div class="desktop-row">
+        <div>
+          <div class="section-card card-config-bg">
+            <h2>Tarifas de Personal y Multiplicadores</h2>
+            <div class="form-group">
+              <label for="valorHoraTrabajador">Valor Hora Base del Trabajador ($)</label>
+              <div class="field-desc">Referencia anclada a servicio doméstico.</div>
+              <input type="number" id="valorHoraTrabajador" placeholder="5000">
+            </div>
+
+            <div class="grid-3">
+              <div class="form-group">
+                <label for="multiplicadorCocinero">Mult. Cocina</label>
+                <div class="field-desc">1.5 (+50%)</div>
+                <input type="number" step="0.1" id="multiplicadorCocinero" placeholder="1.5">
+              </div>
+              <div class="form-group">
+                <label for="multiplicadorAyudante">Mult. Ayudante</label>
+                <div class="field-desc">1.2 (+20%)</div>
+                <input type="number" step="0.1" id="multiplicadorAyudante" placeholder="1.2">
+              </div>
+              <div class="form-group">
+                <label for="multiplicadorMozo">Mult. Mozo</label>
+                <div class="field-desc">1.1 (+10%)</div>
+                <input type="number" step="0.1" id="multiplicadorMozo" placeholder="1.1">
+              </div>
+            </div>
+          </div>
+
+          <div class="section-card card-logistica-bg">
+            <h2>Logística y Combustible</h2>
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="precioLitro">Precio Litro Nafta ($)</label>
+                <div class="field-desc">Costo actual por litro.</div>
+                <input type="number" id="precioLitro" placeholder="1200">
+              </div>
+              <div class="form-group">
+                <label for="rendimientoKm">Rendimiento (km / l)</label>
+                <div class="field-desc">8.5 km/l (Fiat Toro 1.3T).</div>
+                <input type="number" step="0.1" id="rendimientoKm" placeholder="8.5">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-card card-menu-bg">
+            <h2>Valores Base de Menús ($ por comensal)</h2>
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="costoPlatoFormal">Formal 3 Pasos ($)</label>
+                <div class="field-desc">Entrada, principal, postre.</div>
+                <input type="number" id="costoPlatoFormal" placeholder="9500">
+              </div>
+              <div class="form-group">
+                <label for="costoFingerFood">Finger Food ($)</label>
+                <div class="field-desc">Bocaditos y cazuelas.</div>
+                <input type="number" id="costoFingerFood" placeholder="7200">
+              </div>
+            </div>
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="costoBuffet">Buffet Criollo ($)</label>
+                <div class="field-desc">Islas y autoservicio.</div>
+                <input type="number" id="costoBuffet" placeholder="8000">
+              </div>
+              <div class="form-group">
+                <label for="costoMenuCeliaco">Sin TACC / Celíacos ($)</label>
+                <div class="field-desc">Elaboración cuidada.</div>
+                <input type="number" id="costoMenuCeliaco" placeholder="12000">
+              </div>
+            </div>
+          </div>
+
+          <div class="section-card card-config-bg">
+            <h2>Insumos Invisibles (Descartables, Limpieza, Otros) y Margen</h2>
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="pctDescartables">% Descartables y Gas</label>
+                <div class="field-desc">Bolsas, film, garrafas (10%).</div>
+                <input type="number" id="pctDescartables" placeholder="10">
+              </div>
+              <div class="form-group">
+                <label for="pctLimpieza">% Limpieza e Higiene</label>
+                <div class="field-desc">Químicos, trapos, guantes (2%).</div>
+                <input type="number" id="pctLimpieza" placeholder="2">
+              </div>
+            </div>
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="pctRoturas">% Otros (Roturas / Reposición)</label>
+                <div class="field-desc">Copas, loza y vajilla rota (3%).</div>
+                <input type="number" id="pctRoturas" placeholder="3">
+              </div>
+              <div class="form-group">
+                <label for="margenGanancia">% Margen de Ganancia</label>
+                <div class="field-desc">Margen neto sobre precio de venta.</div>
+                <input type="number" id="margenGanancia" placeholder="25">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="action-button" onclick="guardarConfig()">💾 Guardar Configuración de Tarifas</button>
+
+      <div style="margin-top: 14px;">
+        <div class="grid-2">
+          <button type="button" class="secondary-button" onclick="exportarConfig()">📥 Respaldar en archivo las configuraciones</button>
+          <button type="button" class="secondary-button" onclick="document.getElementById('importFile').click()">📤 Cargar archivo de configuraciones</button>
+        </div>
+        <input type="file" id="importFile" style="display:none" onchange="importarConfig(event)">
+        
+        <div class="info-card">
+          💡 <strong>¿Dónde se guarda y cómo se envía?</strong><br>
+          Al hacer clic en <em>"Respaldar en archivo las configuraciones"</em>, se descargará automáticamente una copia en tu carpeta de <strong>Descargas</strong>. Podés adjuntar ese archivo por <strong>WhatsApp</strong> o <strong>email</strong> para abrirlo en otra computadora o celular usando el botón <em>"Cargar archivo de configuraciones"</em>.
+        </div>
+      </div>
+      <div id="configStatus" class="status-msg success"></div>
+    </div>
+
+    <!-- PESTAÑA 2: FICHA DEL SERVICIO -->
+    <div id="tab-evento-content" class="tab-content">
+      <div class="desktop-row">
+        <div>
+          <div class="section-card card-menu-bg">
+            <h2>Propuesta Gastronómica</h2>
+            <div class="form-group">
+              <label for="cliente">Referencia / Cliente</label>
+              <div class="field-desc">Nombre del cliente o evento.</div>
+              <input type="text" id="cliente" placeholder="Ej: Boda Pérez - Salón Los Robles">
+            </div>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="invitados">Cantidad Total Invitados</label>
+                <div class="field-desc">Comensales totales del evento.</div>
+                <input type="number" id="invitados" placeholder="Ingresar cantidad..." oninput="actualizarSugerenciaMozos()">
+              </div>
+              <div class="form-group">
+                <label for="tipoMenu">Tipo de Menú</label>
+                <div class="field-desc">Propuesta contratada.</div>
+                <select id="tipoMenu" onchange="actualizarCostoMenu()">
+                  <option value="formal">Formal 3 Pasos</option>
+                  <option value="finger">Finger Food</option>
+                  <option value="buffet">Buffet Criollo</option>
+                  <option value="manual">Personalizado</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="costoPlatoElegido">Costo Insumos ($ / comensal)</label>
+                <div class="field-desc">Materia prima unitaria tomada de Tarifas.</div>
+                <input type="number" id="costoPlatoElegido">
+              </div>
+              <div class="form-group">
+                <label for="invitadosCeliacos">Cant. Celíacos / Sin TACC</label>
+                <div class="field-desc">Dejar vacío o 0 si no hay.</div>
+                <input type="number" id="invitadosCeliacos" placeholder="0">
+              </div>
+            </div>
+          </div>
+
+          <div class="section-card card-cocina-bg">
+            <h2>Personal de Elaboración (Cocina)</h2>
+            <div class="grid-3">
+              <div class="form-group">
+                <label for="cocinaFamiliar">Cocina Familiar</label>
+                <div class="field-desc">Familiares cocinando.</div>
+                <input type="number" id="cocinaFamiliar" placeholder="0">
+              </div>
+              <div class="form-group">
+                <label for="cocinerosExternos">Cocineros Ext.</label>
+                <div class="field-desc">Jefes de cocina contratados.</div>
+                <input type="number" id="cocinerosExternos" placeholder="0">
+              </div>
+              <div class="form-group">
+                <label for="cocinaExterna">Ayudantes Ext.</label>
+                <div class="field-desc">Apoyo y bachado contratado.</div>
+                <input type="number" id="cocinaExterna" placeholder="0">
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="modalidadCocina">Modalidad de Cobro</label>
+                <div class="field-desc">Esquema de producción.</div>
+                <select id="modalidadCocina" onchange="actualizarTextoTiempoCocina()">
+                  <option value="jornadas">Por Jornadas (8 hs)</option>
+                  <option value="horas">Por Horas de Trabajo</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label id="lblTiempoCocina" for="cantidadTiempoCocina">Jornadas dedicadas (c/u)</label>
+                <div class="field-desc" id="descTiempoCocina">Días de 8 hs por persona.</div>
+                <input type="number" id="cantidadTiempoCocina" placeholder="Ej: 1">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-card card-config-bg">
+            <h2>Personal de Salón (Mozos)</h2>
+            <div class="field-desc" id="sugerenciaMozosTexto" style="color:var(--brand-olive); font-weight:700; margin-bottom:8px;">Dotación recomendada: 0 mozo(s)</div>
+            
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="mozosFamiliares">Mozos Familiares</label>
+                <div class="field-desc">Familiares en el salón.</div>
+                <input type="number" id="mozosFamiliares" placeholder="0">
+              </div>
+              <div class="form-group">
+                <label for="mozosExternos">Mozos Externos</label>
+                <div class="field-desc">Mozos contratados afuera.</div>
+                <input type="number" id="mozosExternos" placeholder="0">
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="horasServicio">Horas de Salón</label>
+                <div class="field-desc">Duración del evento.</div>
+                <input type="number" id="horasServicio" placeholder="Ej: 6">
+              </div>
+              <div class="form-group">
+                <div class="checkbox-container" style="margin-top:22px;">
+                  <input type="checkbox" id="armadoPrevio">
+                  <div>
+                    <label for="armadoPrevio" style="margin-bottom:0;">Armado Previo Salón</label>
+                    <div class="field-desc">Suma 4 hs de montaje.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-card card-logistica-bg">
+            <h2>Logística y Traslado</h2>
+            <div class="checkbox-container" style="margin-bottom: 8px;">
+              <input type="checkbox" id="usaFlete" onchange="toggleLogistica()">
+              <div>
+                <label for="usaFlete" style="margin-bottom:0;">Contratar Flete / Transporte Externo</label>
+                <div class="field-desc">Tildar si no se utiliza vehículo particular.</div>
+              </div>
+            </div>
+
+            <div id="bloqueFlete" style="display:none;" class="form-group">
+              <label for="costoFleteManual">Costo Total del Flete Contratado ($)</label>
+              <input type="number" id="costoFleteManual" placeholder="Ej: 35000">
+            </div>
+
+            <div id="bloqueVehiculoPropio" class="grid-2">
+              <div class="form-group">
+                <label for="distanciaKm">Distancia Ida y Vuelta (km)</label>
+                <div class="field-desc">Kilómetros totales.</div>
+                <input type="number" id="distanciaKm" placeholder="Ej: 40">
+              </div>
+              <div class="form-group">
+                <label for="cantidadViajes">Cantidad de Viajes</label>
+                <div class="field-desc">Viajes previstos.</div>
+                <input type="number" id="cantidadViajes" placeholder="Ej: 1">
+              </div>
+            </div>
+          </div>
+
+          <div class="section-card card-menu-bg">
+            <h2>Condiciones Comerciales</h2>
+            <div class="grid-2">
+              <div class="form-group">
+                <label for="porcentajeReserva">% Seña / Reserva</label>
+                <div class="field-desc">Predeterminado: 20%.</div>
+                <input type="number" id="porcentajeReserva" value="20">
+              </div>
+              <div class="form-group">
+                <label for="vigenciaMeses">Vigencia / Plazo (Meses)</label>
+                <div class="field-desc">Plazo de validez de la oferta.</div>
+                <input type="number" id="vigenciaMeses" placeholder="Ej: 1">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="action-button" onclick="calcularCotizacion()">🧮 Calcular Cotización</button>
+      <div id="eventoStatus" class="status-msg warning"></div>
+    </div>
+
+    <!-- PESTAÑA 3: COTIZACIÓN & DECISIONES -->
+    <div id="tab-resultado-content" class="tab-content">
+      <div class="section-card card-resultado-bg">
+        <h2>Buenos Momentos Eventos · Panel de Presupuesto</h2>
+        <div id="resultadoContenido">
+          Completá los datos del servicio en la pestaña anterior y presioná <strong>Calcular Cotización</strong>.
+        </div>
+
+        <div style="margin-top: 14px;">
+          <button type="button" id="btnVerPropuesta" class="secondary-button" onclick="abrirPresupuestoCliente()">📄 Ver Propuesta Formal para el Cliente (PDF)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL EN PANTALLA -->
+  <div id="modalCliente">
+    <div class="modal-sheet">
+      <div id="contenidoModalSoloVista"></div>
+      
+      <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+        <button type="button" class="action-button" onclick="imprimirOguardarPDF()" style="margin: 0; flex: 1; min-width: 200px;">🖨️ Descargar en PDF / Imprimir</button>
+        <button type="button" class="secondary-button" onclick="cerrarModalCliente()" style="margin: 0; flex: 0.5; min-width: 100px;">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENEDOR EXCLUSIVO PARA IMPRESIÓN DIRECTA -->
+  <div id="seccionImpresion"></div>
+
+  <script>
+    const configFields = [
+      "valorHoraTrabajador", "multiplicadorCocinero", "multiplicadorAyudante", "multiplicadorMozo",
+      "costoPlatoFormal", "costoFingerFood", "costoBuffet", "costoMenuCeliaco",
+      "precioLitro", "rendimientoKm", "pctDescartables", "pctRoturas",
+      "pctLimpieza", "margenGanancia"
+    ];
+
+    let calculoBase = null;
+
+    function switchTab(tabKey) {
+      document.getElementById('tab-config-content').style.display = 'none';
+      document.getElementById('tab-evento-content').style.display = 'none';
+      document.getElementById('tab-resultado-content').style.display = 'none';
+
+      document.getElementById('btn-config').classList.remove('tab-active');
+      document.getElementById('btn-evento').classList.remove('tab-active');
+      document.getElementById('btn-resultado').classList.remove('tab-active');
+
+      if (tabKey === 'config') {
+        document.getElementById('tab-config-content').style.display = 'block';
+        document.getElementById('btn-config').classList.add('tab-active');
+      } else if (tabKey === 'evento') {
+        document.getElementById('tab-evento-content').style.display = 'block';
+        document.getElementById('btn-evento').classList.add('tab-active');
+      } else if (tabKey === 'resultado') {
+        document.getElementById('tab-resultado-content').style.display = 'block';
+        document.getElementById('btn-resultado').classList.add('tab-active');
+      }
+    }
+
+    function toggleLogistica() {
+      const usaFlete = document.getElementById("usaFlete").checked;
+      document.getElementById("bloqueFlete").style.display = usaFlete ? "block" : "none";
+      document.getElementById("bloqueVehiculoPropio").style.display = usaFlete ? "none" : "grid";
+    }
+
+    function actualizarTextoTiempoCocina() {
+      const mod = document.getElementById("modalidadCocina").value;
+      const lbl = document.getElementById("lblTiempoCocina");
+      const desc = document.getElementById("descTiempoCocina");
+      if (mod === "jornadas") {
+        lbl.textContent = "Jornadas dedicadas (c/u)";
+        desc.textContent = "Días de 8 hs por persona.";
+      } else {
+        lbl.textContent = "Horas totales (c/u)";
+        desc.textContent = "Horas directas por persona.";
+      }
+    }
+
+    function guardarConfig() {
+      const config = {};
+      configFields.forEach(f => { config[f] = document.getElementById(f).value; });
+      localStorage.setItem("buenosMomentosTarifasV4", JSON.stringify(config));
+
+      const status = document.getElementById("configStatus");
+      status.style.display = "block";
+      status.textContent = "✅ Configuración de tarifas guardada en tu dispositivo.";
+      setTimeout(() => { status.style.display = "none"; }, 3000);
+      actualizarCostoMenu();
+    }
+
+    function cargarConfig() {
+      const saved = localStorage.getItem("buenosMomentosTarifasV4");
+      const config = saved ? JSON.parse(saved) : {};
+      
+      document.getElementById("valorHoraTrabajador").value = config.valorHoraTrabajador || 5000;
+      document.getElementById("multiplicadorCocinero").value = config.multiplicadorCocinero || 1.5;
+      document.getElementById("multiplicadorAyudante").value = config.multiplicadorAyudante || 1.2;
+      document.getElementById("multiplicadorMozo").value = config.multiplicadorMozo || 1.1;
+      document.getElementById("costoPlatoFormal").value = config.costoPlatoFormal || 9500;
+      document.getElementById("costoFingerFood").value = config.costoFingerFood || 7200;
+      document.getElementById("costoBuffet").value = config.costoBuffet || 8000;
+      document.getElementById("costoMenuCeliaco").value = config.costoMenuCeliaco || 12000;
+      document.getElementById("precioLitro").value = config.precioLitro || 1200;
+      document.getElementById("rendimientoKm").value = config.rendimientoKm || 8.5;
+      document.getElementById("pctDescartables").value = config.pctDescartables || 10;
+      document.getElementById("pctRoturas").value = config.pctRoturas || 3;
+      document.getElementById("pctLimpieza").value = config.pctLimpieza || 2;
+      document.getElementById("margenGanancia").value = config.margenGanancia || 25;
+
+      actualizarCostoMenu();
+    }
+
+    function actualizarCostoMenu() {
+      const tipo = document.getElementById("tipoMenu").value;
+      const platoInput = document.getElementById("costoPlatoElegido");
+      if (tipo === "formal") platoInput.value = document.getElementById("costoPlatoFormal").value;
+      else if (tipo === "finger") platoInput.value = document.getElementById("costoFingerFood").value;
+      else if (tipo === "buffet") platoInput.value = document.getElementById("costoBuffet").value;
+      actualizarSugerenciaMozos();
+    }
+
+    function actualizarSugerenciaMozos() {
+      const invitados = Number(document.getElementById("invitados").value || 0);
+      const tipo = document.getElementById("tipoMenu").value;
+      let divisor = (tipo === "finger") ? 35 : (tipo === "buffet" ? 40 : 24);
+
+      if (invitados > 0) {
+        const sugeridos = Math.ceil(invitados / divisor);
+        document.getElementById("sugerenciaMozosTexto").textContent = `Dotación recomendada: ${sugeridos} mozo(s)`;
+      } else {
+        document.getElementById("sugerenciaMozosTexto").textContent = `Dotación recomendada: 0 mozo(s)`;
+      }
+    }
+
+    function exportarConfig() {
+      const config = {};
+      configFields.forEach(f => { config[f] = document.getElementById(f).value; });
+      const blob = new Blob([JSON.stringify(config, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "BuenosMomentos_Configuraciones.txt";
+      a.click();
+    }
+
+    function importarConfig(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const config = JSON.parse(e.target.result);
+          localStorage.setItem("buenosMomentosTarifasV4", JSON.stringify(config));
+          cargarConfig();
+          alert("¡Configuraciones cargadas con éxito desde el archivo!");
+        } catch (err) { alert("El archivo seleccionado no es válido."); }
+      };
+      reader.readAsText(file);
+    }
+
+    function calcularCotizacion() {
+      const invitados = Number(document.getElementById("invitados").value || 0);
+      if (!invitados || invitados <= 0) {
+        const status = document.getElementById("eventoStatus");
+        status.style.display = "block";
+        status.textContent = "⚠️ Ingresá una cantidad válida de comensales en la Ficha del Servicio.";
+        return;
+      }
+      document.getElementById("eventoStatus").style.display = "none";
+
+      const costoMenuBase = Number(document.getElementById("costoPlatoElegido").value || 0);
+      const celiacos = Number(document.getElementById("invitadosCeliacos").value || 0);
+      const costoCeliaco = Number(document.getElementById("costoMenuCeliaco").value || (costoMenuBase * 1.35));
+      const estandar = Math.max(0, invitados - celiacos);
+      let subtotalAlimentos = (estandar * costoMenuBase) + (celiacos * costoCeliaco);
+
+      const vHoraBase = Number(document.getElementById("valorHoraTrabajador").value || 5000);
+      const multCocinero = Number(document.getElementById("multiplicadorCocinero").value || 1.5);
+      const multAyudante = Number(document.getElementById("multiplicadorAyudante").value || 1.2);
+      const multMozo = Number(document.getElementById("multiplicadorMozo").value || 1.1);
+
+      const vHoraCocinero = vHoraBase * multCocinero;
+      const vHoraAyudante = vHoraBase * multAyudante;
+      const vHoraMozo = vHoraBase * multMozo;
+
+      const cocFam = Number(document.getElementById("cocinaFamiliar").value || 0);
+      const cocExtChef = Number(document.getElementById("cocinerosExternos").value || 0);
+      const cocExtAyud = Number(document.getElementById("cocinaExterna").value || 0);
+      const modCocina = document.getElementById("modalidadCocina").value;
+      const tCocina = Number(document.getElementById("cantidadTiempoCocina").value || 0);
+
+      let horasPorPersona = (modCocina === "jornadas") ? (tCocina * 8) : tCocina;
+      let costoCocinaFamiliar = cocFam * horasPorPersona * vHoraCocinero;
+      let costoCocinerosExternos = cocExtChef * horasPorPersona * vHoraCocinero;
+      let costoAyudantesExternos = cocExtAyud * horasPorPersona * vHoraAyudante;
+
+      const mFam = Number(document.getElementById("mozosFamiliares").value || 0);
+      const mExt = Number(document.getElementById("mozosExternos").value || 0);
+      const horasServ = Number(document.getElementById("horasServicio").value || 0);
+
+      let costoMozosFamiliar = mFam * horasServ * vHoraMozo;
+      let costoMozosExterno = mExt * horasServ * vHoraMozo;
+
+      const armadoPrevio = document.getElementById("armadoPrevio").checked;
+      let costoArmado = armadoPrevio ? (vHoraBase * 4) : 0;
+
+      let costoTraslado = 0;
+      const usaFlete = document.getElementById("usaFlete").checked;
+      if (usaFlete) {
+        costoTraslado = Number(document.getElementById("costoFleteManual").value || 0);
+      } else {
+        const distancia = Number(document.getElementById("distanciaKm").value || 0);
+        const viajes = Number(document.getElementById("cantidadViajes").value || 1);
+        const precioNafta = Number(document.getElementById("precioLitro").value || 0);
+        const rendimiento = Number(document.getElementById("rendimientoKm").value || 8.5);
+        if (precioNafta > 0 && rendimiento > 0) {
+          costoTraslado = (distancia * viajes) * ((precioNafta / rendimiento) * 1.30);
+        }
+      }
+
+      // Se recoge la vigencia directamente sin forzar valor por defecto
+      const vigencia = document.getElementById("vigenciaMeses").value;
+
+      calculoBase = {
+        invitados,
+        celiacos,
+        subtotalAlimentos,
+        costoCocinaFamiliar,
+        costoCocinerosExternos,
+        costoAyudantesExternos,
+        costoMozosFamiliar,
+        costoMozosExterno,
+        armadoPrevio,
+        costoArmado,
+        costoTraslado,
+        vHoraCocinero,
+        vHoraAyudante,
+        vHoraMozo,
+        horasPorPersona,
+        horasServ,
+        cocFam,
+        cocExtChef,
+        cocExtAyud,
+        mFam,
+        mExt,
+        usaFlete,
+        vigencia,
+        cliente: document.getElementById("cliente").value.trim() || "Cliente",
+        tipoMenu: document.getElementById("tipoMenu").options[document.getElementById("tipoMenu").selectedIndex].text
+      };
+
+      renderizarCotizacion();
+      switchTab('resultado');
+    }
+
+    function renderizarCotizacion() {
+      if (!calculoBase) return;
+
+      const incCocFam = document.getElementById("chkIncCocFam") ? document.getElementById("chkIncCocFam").checked : true;
+      const incCocExtChef = document.getElementById("chkIncCocExtChef") ? document.getElementById("chkIncCocExtChef").checked : true;
+      const incCocExtAyud = document.getElementById("chkIncCocExtAyud") ? document.getElementById("chkIncCocExtAyud").checked : true;
+      const incMozFam = document.getElementById("chkIncMozFam") ? document.getElementById("chkIncMozFam").checked : true;
+      const incMozExt = document.getElementById("chkIncMozExt") ? document.getElementById("chkIncMozExt").checked : true;
+
+      let cCocFam = incCocFam ? calculoBase.costoCocinaFamiliar : 0;
+      let cCocExtChef = incCocExtChef ? calculoBase.costoCocinerosExternos : 0;
+      let cCocExtAyud = incCocExtAyud ? calculoBase.costoAyudantesExternos : 0;
+      let cMozFam = incMozFam ? calculoBase.costoMozosFamiliar : 0;
+      let cMozExt = incMozExt ? calculoBase.costoMozosExterno : 0;
+
+      let costoDirecto = calculoBase.subtotalAlimentos + cCocFam + cCocExtChef + cCocExtAyud + cMozFam + cMozExt + calculoBase.costoArmado + calculoBase.costoTraslado;
+
+      const pctDesc = Number(document.getElementById("pctDescartables").value || 10) / 100;
+      const pctRot = Number(document.getElementById("pctRoturas").value || 3) / 100;
+      const pctLimp = Number(document.getElementById("pctLimpieza").value || 2) / 100;
+
+      let subtotalDescartables = calculoBase.subtotalAlimentos * pctDesc;
+      let subtotalLimpieza = costoDirecto * pctLimp;
+      let subtotalOtros = costoDirecto * pctRot;
+      let subtotalInvisibles = subtotalDescartables + subtotalLimpieza + subtotalOtros;
+
+      let costoTotal = costoDirecto + subtotalInvisibles;
+
+      const margen = Number(document.getElementById("margenGanancia").value || 25) / 100;
+      let precioFinal = margen < 1 ? Math.round(costoTotal / (1 - margen)) : costoTotal;
+      let precioCubierto = Math.round(precioFinal / calculoBase.invitados);
+      let pctReserva = Number(document.getElementById("porcentajeReserva").value || 20) / 100;
+      let anticipo = Math.round(precioFinal * pctReserva);
+
+      let ahorroFamiliarNoCobrado = (!incCocFam ? calculoBase.costoCocinaFamiliar : 0) + (!incMozFam ? calculoBase.costoMozosFamiliar : 0);
+
+      calculoBase.precioFinal = precioFinal;
+      calculoBase.precioCubierto = precioCubierto;
+      calculoBase.anticipo = anticipo;
+      calculoBase.pctReserva = Math.round(pctReserva * 100);
+
+      let html = `
+        <div class="result-item"><span>Cliente / Evento:</span> <strong>${calculoBase.cliente}</strong></div>
+        <div class="result-item"><span>Invitados:</span> <strong>${calculoBase.invitados} (${calculoBase.celiacos} sin TACC)</strong></div>         <div class="result-item"><span>Materia Prima Alimentos:</span> <strong>$${Math.round(calculoBase.subtotalAlimentos).toLocaleString('es-AR')}</strong></div>${calculoBase.cocFam > 0 ? `
+        <div class="result-item" style="color:#6d4c41;">
+          <span>Cocina Familiar (${calculoBase.cocFam} pers. @ $${Math.round(calculoBase.vHoraCocinero)}/h):</span> 
+          <strong>$${Math.round(calculoBase.costoCocinaFamiliar).toLocaleString('es-AR')} ${!incCocFam ? '<span style="color:var(--brand-terracotta);">(NO cobrado)</span>' : ''}</strong>
+        </div>` : ''}
+
+        ${calculoBase.cocExtChef > 0 ? `
+        <div class="result-item" style="color:#6d4c41;">
+          <span>Cocineros Externos (${calculoBase.cocExtChef} pers. @ $${Math.round(calculoBase.vHoraCocinero)}/h):</span> 
+          <strong>$${Math.round(calculoBase.costoCocinerosExternos).toLocaleString('es-AR')} ${!incCocExtChef ? '<span style="color:var(--brand-terracotta);">(NO cobrado)</span>' : ''}</strong>
+        </div>` : ''}
+
+        ${calculoBase.cocExtAyud > 0 ? `
+        <div class="result-item" style="color:#6d4c41;">
+          <span>Ayudantes Externos (${calculoBase.cocExtAyud} ayud. @ $${Math.round(calculoBase.vHoraAyudante)}/h):</span> 
+          <strong>$${Math.round(calculoBase.costoAyudantesExternos).toLocaleString('es-AR')} ${!incCocExtAyud ? '<span style="color:var(--brand-terracotta);">(NO cobrado)</span>' : ''}</strong>
+        </div>` : ''}
+
+        ${calculoBase.mFam > 0 ? `
+        <div class="result-item" style="color:var(--brand-olive);">
+          <span>Mozos Familiares (${calculoBase.mFam} pers. @ $${Math.round(calculoBase.vHoraMozo)}/h):</span> 
+          <strong>$${Math.round(calculoBase.costoMozosFamiliar).toLocaleString('es-AR')} ${!incMozFam ? '<span style="color:var(--brand-terracotta);">(NO cobrado)</span>' : ''}</strong>
+        </div>` : ''}
+        
+        ${calculoBase.mExt > 0 ? `
+        <div class="result-item" style="color:var(--brand-olive);">
+          <span>Mozos Externos (${calculoBase.mExt} mozos @ $${Math.round(calculoBase.vHoraMozo)}/h):</span> 
+          <strong>$${Math.round(calculoBase.costoMozosExterno).toLocaleString('es-AR')} ${!incMozExt ? '<span style="color:var(--brand-terracotta);">(NO cobrado)</span>' : ''}</strong>
+        </div>` : ''}
+
+        ${calculoBase.armadoPrevio ? `
+        <div class="result-item" style="color:var(--brand-navy);">
+          <span>Armado Previo del Salón (4 hs):</span> 
+          <strong>$${Math.round(calculoBase.costoArmado).toLocaleString('es-AR')}</strong>
+        </div>` : ''}
+
+        <div class="result-item"><span>Logística (${calculoBase.usaFlete ? 'Flete Contratado' : 'Vehículo Propio'}):</span> <strong>$${Math.round(calculoBase.costoTraslado).toLocaleString('es-AR')}</strong></div>
+        
+        <div class="result-item">
+          <span>Insumos Invisibles (Descartables/Gas: $${Math.round(subtotalDescartables).toLocaleString('es-AR')}, Limpieza:$${Math.round(subtotalLimpieza).toLocaleString('es-AR')}, Otros/Roturas: $${Math.round(subtotalOtros).toLocaleString('es-AR')}):</span>            <strong>$${Math.round(subtotalInvisibles).toLocaleString('es-AR')}</strong>
+        </div>
+
+        <div class="decision-box">
+          <label style="color:var(--brand-olive); font-size:13.5px; font-weight:700;">Decisiones Internas: ¿Cobrar trabajo propio y personal?</label>
+          <div class="grid-3" style="margin-top:8px;">
+            <div class="checkbox-container">
+              <input type="checkbox" id="chkIncCocFam" ${incCocFam ? 'checked' : ''} onchange="renderizarCotizacion()">
+              <label for="chkIncCocFam">Cocina Familiar</label>
+            </div>
+            <div class="checkbox-container">
+              <input type="checkbox" id="chkIncCocExtChef" ${incCocExtChef ? 'checked' : ''} onchange="renderizarCotizacion()">
+              <label for="chkIncCocExtChef">Cocineros Externos</label>
+            </div>
+            <div class="checkbox-container">
+              <input type="checkbox" id="chkIncCocExtAyud" ${incCocExtAyud ? 'checked' : ''} onchange="renderizarCotizacion()">
+              <label for="chkIncCocExtAyud">Ayudantes Externos</label>
+            </div>
+          </div>
+          <div class="grid-2" style="margin-top:4px;">
+            <div class="checkbox-container">
+              <input type="checkbox" id="chkIncMozFam" ${incMozFam ? 'checked' : ''} onchange="renderizarCotizacion()">
+              <label for="chkIncMozFam">Mozos Familiares</label>
+            </div>
+            <div class="checkbox-container">
+              <input type="checkbox" id="chkIncMozExt" ${incMozExt ? 'checked' : ''} onchange="renderizarCotizacion()">
+              <label for="chkIncMozExt">Mozos Externos</label>
+            </div>
+          </div>
+          ${ahorroFamiliarNoCobrado > 0 ? `
+            <div style="font-size:12px; color:var(--brand-terracotta); margin-top:8px; font-weight:700;">
+              ⚠️ La familia está absorbiendo $${Math.round(ahorroFamiliarNoCobrado).toLocaleString('es-AR')} de mano de obra propia para abaratar costos al cliente.
+            </div>` : ''}
+        </div>
+
+        <div class="highlight-card">
+          <div style="font-size:12px; color:var(--text-muted); text-transform:uppercase;">Presupuesto Final Sugerido</div>
+          <div class="price">$${precioFinal.toLocaleString('es-AR')}</div>           <div style="font-size:13.5px; color:var(--text-main); margin-top:4px;"><strong>$${precioCubierto.toLocaleString('es-AR')}</strong> por comensal</div>
+        </div>
+
+        <div class="result-item" style="margin-top:12px;"><span>Adelanto Reserva Requerida (${calculoBase.pctReserva}\%):</span> <strong>$${anticipo.toLocaleString('es-AR')}</strong></div>
+      `;
+
+      document.getElementById("resultadoContenido").innerHTML = html;
+    }
+
+    function armarHTMLPropuestaCliente() {
+      const totalMozos = (calculoBase.mFam || 0) + (calculoBase.mExt || 0);
+
+      // Si hay vigencia escrita, la mostramos. Si está vacía, no imprimimos la línea.
+      const vigenciaHTML = calculoBase.vigencia 
+        ? `• <strong>Vigencia de la Oferta:</strong> ${calculoBase.vigencia} mes(es) desde la fecha de emisión.<br>` 
+        : ``;
+
+      return `
+        <div class="comercial-header" style="text-align:center; border-bottom:2px solid #5b6e4e; padding-bottom:8px; margin-bottom:12px;">
+          <img src="logo.png" alt="Buenos Momentos Eventos" style="max-width:110px; margin-bottom:4px;" onerror="this.style.display='none'">
+          <h2 style="font-size:19px; color:#b3533b; margin:0;">Buenos Momentos Eventos</h2>
+          <div style="font-size:12px; color:#555;">Servicio Integral de Catering & Banquetería</div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:12.5px; color:#333;">
+          <div><strong>Cliente / Evento:</strong> ${calculoBase.cliente}</div>
+          <div><strong>Fecha de Emisión:</strong> ${new Date().toLocaleDateString('es-AR')}</div>
+        </div>
+
+        <div class="comercial-item" style="display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px solid #eee; font-size:12.5px;">
+          <span>Comensales Presupuestados:</span> <strong>${calculoBase.invitados} personas ${calculoBase.celiacos > 0 ? '(' + calculoBase.celiacos + ' sin TACC)' : ''}</strong>
+        </div>
+        <div class="comercial-item" style="display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px solid #eee; font-size:12.5px;">
+          <span>Propuesta Gastronómica:</span> <strong>${calculoBase.tipoMenu}</strong>
+        </div>
+        ${totalMozos > 0 ? `
+        <div class="comercial-item" style="display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px solid #eee; font-size:12.5px;">
+          <span>Personal de Atención y Salón:</span> <strong>${totalMozos} mozo(s) (${calculoBase.horasServ} hs de servicio)</strong>
+        </div>` : ''}
+        
+        ${calculoBase.armadoPrevio ? `
+        <div class="comercial-item" style="display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px solid #eee; font-size:12.5px;">
+          <span>Montaje y Armado Previo de Salón:</span> <strong>Incluido en la propuesta</strong>
+        </div>` : ''}
+
+        <div class="comercial-item" style="display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px solid #eee; font-size:12.5px;">
+          <span>Logística y Traslado de Mercadería:</span> <strong>Incluido en la propuesta</strong>
+        </div>
+
+        <div class="comercial-total" style="background:#fbf7f0; border:1px solid #ebd7c1; padding:10px; border-radius:8px; text-align:center; margin:12px 0;">
+          <div style="font-size:11px; text-transform:uppercase; color:#666; letter-spacing:0.8px;">Inversión Total del Servicio</div>
+          <div class="big-price" style="font-size:22px; font-weight:800; color:#5b6e4e;">$${calculoBase.precioFinal.toLocaleString('es-AR')}</div>
+          <div style="font-size:12.5px; margin-top:2px;"><strong>$${calculoBase.precioCubierto.toLocaleString('es-AR')}</strong> por comensal</div>
+        </div>
+
+        <div style="background:#f9f9f9; padding:10px 12px; border-radius:6px; font-size:11.5px; line-height:1.45; color:#555;">
+          <strong>Condiciones Comerciales y de Reserva:</strong><br>
+          • <strong>Anticipo de Reserva (${calculoBase.pctReserva}%):</strong> $${calculoBase.anticipo.toLocaleString('es-AR')} para congelar la fecha del evento.<br>
+          ${vigenciaHTML}
+          • <strong>Saldo Restante:</strong> Financiable en cuotas, reajustable según variables económicas oficiales (Canasta Básica de Alimentos / IPC).
+        </div>
+      `;
+    }
+
+    function abrirPresupuestoCliente() {
+      if (!calculoBase) {
+        alert("Primero debés calcular una cotización en la Ficha del Servicio.");
+        return;
+      }
+
+      const html = armarHTMLPropuestaCliente();
+      
+      // Se precarga en ambas secciones
+      document.getElementById("contenidoModalSoloVista").innerHTML = html;
+      document.getElementById("seccionImpresion").innerHTML = html;
+      
+      const modal = document.getElementById("modalCliente");
+      modal.style.display = "block";
+      modal.scrollTop = 0;
+    }
+
+    function cerrarModalCliente() {
+      document.getElementById("modalCliente").style.display = "none";
+    }
+
+    // Llamada de impresión nativa y sincrónica para evadir los bloqueos en Android / iOS
+    function imprimirOguardarPDF() {
+      if (!calculoBase) return;
+      document.getElementById("seccionImpresion").innerHTML = armarHTMLPropuestaCliente();
+      window.print();
+    }
+
+    window.onload = function() {
+      cargarConfig();
+      switchTab('config');
+    };
+  </script>
+</body>
+</html>
