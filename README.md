@@ -29,6 +29,23 @@ El sistema procesa y calcula de forma autónoma:
 
 ---
 
+## 🔍 Relevamiento Metodológico y Estándares de la Industria
+
+El diseño funcional y los algoritmos de cálculo de esta herramienta se fundamentan en dos pilares clave de gestión:
+
+1. **Diagnóstico Organizacional (Cuestionario a Operadores):**  
+   Se realizó un relevamiento inicial a los responsables del servicio para analizar cómo cotizaban históricamente. El diagnóstico reveló omisiones críticas recurrentes:
+   * **Invisibilización de la mano de obra familiar:** Las horas dedicadas por los integrantes de la familia a la elaboración previa, cocción y atención no se contabilizaban como costo, distorsionando la rentabilidad real y provocando autoexplotación económica.
+   * **Costos invisibles no recuperados:** Gastos operativos como gas envasado, film, bolsas de vacío, químicos de limpieza y roturas de vajilla eran absorbidos por el emprendimiento sin trasladarse al presupuesto.
+
+2. **Alineación con Estándares Gastronómicos Profesionales:**  
+   Los parámetros preconfigurados responden a métricas y buenas prácticas del sector de catering y banquetería:
+   * **Escandallo e Insumos Ocultos:** Estimación técnica de descartables (10%), higiene/limpieza (2%) y fondo de rotura/reposición (3%).
+   * **Dotación Algorítmica de Salón:** Ratios estándar de mozos por tipo de servicio (1/24 en formal al plato, 1/35 en finger food y 1/40 en buffet).
+   * **Estructura Salarial Homologada:** Tarificación referenciada en la hora base de servicio y multiplicadores ponderados por especialidad técnica (Chef $\times 1.5$, Ayudante $\times 1.2$, Mozo $\times 1.1$).
+   * **Margen Financiero Real:** Aplicación del principio contable sobre el precio final de venta en lugar del margen sobre costo directo.
+---
+
 ## 🎯 ¿Para qué sirve?
 
 * **Agiliza los tiempos comerciales:** Reduce el tiempo de presupuestación de más de 2 horas de cálculos manuales a menos de 3 minutos.
@@ -65,23 +82,6 @@ Diseñado con un enfoque de arquitectura liviana, portable y con costo de manten
    * Se utiliza el panel de decisiones para seleccionar qué mano de obra trasladar al precio de venta.
    * Se presiona **📄 Ver Propuesta Formal para el Cliente (PDF)** y luego **🖨️ Descargar en PDF / Imprimir** para emitir el presupuesto formal.
 
----
-
-## 🔍 Relevamiento Metodológico y Estándares de la Industria
-
-El diseño funcional y los algoritmos de cálculo de esta herramienta se fundamentan en dos pilares clave de gestión:
-
-1. **Diagnóstico Organizacional (Cuestionario a Operadores):**  
-   Se realizó un relevamiento inicial a los responsables del servicio para analizar cómo cotizaban históricamente. El diagnóstico reveló omisiones críticas recurrentes:
-   * **Invisibilización de la mano de obra familiar:** Las horas dedicadas por los integrantes de la familia a la elaboración previa, cocción y atención no se contabilizaban como costo, distorsionando la rentabilidad real y provocando autoexplotación económica.
-   * **Costos invisibles no recuperados:** Gastos operativos como gas envasado, film, bolsas de vacío, químicos de limpieza y roturas de vajilla eran absorbidos por el emprendimiento sin trasladarse al presupuesto.
-
-2. **Alineación con Estándares Gastronómicos Profesionales:**  
-   Los parámetros preconfigurados responden a métricas y buenas prácticas del sector de catering y banquetería:
-   * **Escandallo e Insumos Ocultos:** Estimación técnica de descartables (10%), higiene/limpieza (2%) y fondo de rotura/reposición (3%).
-   * **Dotación Algorítmica de Salón:** Ratios estándar de mozos por tipo de servicio (1/24 en formal al plato, 1/35 en finger food y 1/40 en buffet).
-   * **Estructura Salarial Homologada:** Tarificación referenciada en la hora base de servicio y multiplicadores ponderados por especialidad técnica (Chef $\times 1.5$, Ayudante $\times 1.2$, Mozo $\times 1.1$).
-   * **Margen Financiero Real:** Aplicación del principio contable sobre el precio final de venta en lugar del margen sobre costo directo.
 ---
 
 ## 📂 Estructura del Repositorio
