@@ -87,10 +87,10 @@ Diseñado con un enfoque de arquitectura liviana, portable y con costo de manten
 ## 🔮 Escalabilidad y Evolución Futura
 
 El proyecto contempla una hoja de ruta estratégica para evolucionar hacia una plataforma de gestión integral:
-* **Panel de Control y Métricas (Dashboard KPI):** Visualización de cubiertos vendidos, menús más demandados y facturación mensual proyectada.
+* **Panel de Control y Métricas (Dashboard):** Visualización de cubiertos vendidos, menús más demandados y facturación mensual proyectada.
 * **Módulo de Cobranzas y Financiación:** Seguimiento de señas cobradas, cuotas pactadas y reajuste automático de saldos según índices inflacionarios oficiales (INDEC / CBA).
-* **Integración Omnicanal con IA Agéntica:** Asistente conversacional en WhatsApp Business para atención inicial de consultas de eventos y precarga automática de fichas de servicio.
-* **Persistencia en la Nube:** Migración planificada hacia bases de datos serverless (Supabase / Firebase) para sincronización multiusuario sin costos fijos.
+* **Integración Omnicanal con IA Agéntica:** Asistente conversacional en WhatsApp Business o Telegram para atención inicial de consultas de eventos y precarga automática de fichas de servicio.
+* **Persistencia en la Nube:** Migración planificada hacia bases de datos para sincronización multiusuario sin costos fijos.
 
 ---
 
