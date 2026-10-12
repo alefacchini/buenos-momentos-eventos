@@ -1,78 +1,77 @@
 # Buenos Momentos Eventos · Presupuestador Gastronómico Inteligente
 
-> Herramienta de gestión financiera, escandallo simplificado y costeo de servicios de catering.  
-> **Trabajo Final Integrador** — Diplomatura Universitaria Superior en Inteligencia Artificial Aplicada a la Gestión de Organizaciones  
-> **Facultad de Ciencias Económicas · Universidad de Buenos Aires (FCE-UBA)** · Cohorte 2026
+<p align="center">
+  <img src="logo.png" alt="Buenos Momentos Eventos" width="220">
+</p>
+
+<p align="center">
+  <strong>Herramienta de gestión financiera, escandallo simplificado y costeo de servicios de catering.</strong><br>
+  <em>Trabajo Final Integrador — Diplomatura Universitaria Superior en Inteligencia Artificial Aplicada a la Gestión de Organizaciones</em><br>
+  <strong>Facultad de Ciencias Económicas · Universidad de Buenos Aires (FCE-UBA)</strong> · Cohorte 2026
+</p>
 
 ---
 
 ## 📌 ¿Qué hace el proyecto?
 
-**Buenos Momentos Eventos** es una aplicación web (*Single Page Application*) desarrollada para resolver de manera simple las fallas y omisiones en el cálculo de costos en emprendimientos gastronómicos familiares.
+**Buenos Momentos Eventos** es una aplicación web local (*Single Page Application*) desarrollada para resolver las fallas de costeo, omisión de gastos operativos e invisibilización de la mano de obra en un emprendimiento familiar de catering.
 
-El sistema procesa automáticamente:
-1. **Materia prima de alimentos:** Menús base por comensal y recargos diferenciales para comensales celíacos / sin TACC.
-2. **Personal técnico de cocina:** Cálculo discriminado entre cocineros familiares y ayudantes externos, contratados por jornada completa (8 hs) o por horas de producción.
-3. **Personal de salón (Mozos):** Sugerencia algorítmica de mozos según comensales y tipo de servicio (al plato, finger food o buffet), discriminando atención familiar de personal contratado afuera.
-4. **Logística y transporte:** Estimación de combustible para vehículo utilitario (Fiat Toro 1.3T Nafta: 8.5 km/l + 30% desgaste) o tarifa fija por flete externo.
-5. **Costos invisibles:** Detección de descartables, garrafas/gas envasado, fondo de roturas de vajilla y artículos de limpieza.
-6. **Margen financiero real:** Aplicación de la fórmula económica $Precio = Costo / (1 - Margen)$ sobre el valor de venta.
-7. **Control Humano (*Human-in-the-loop*):** Casillas de verificación para que la familia decida si traslada o absorbe el costo de su propia mano de obra, visibilizando el ahorro cedido al cliente.
+El sistema procesa y calcula de forma autónoma:
+1. **Materia prima y menús:** Selección de propuestas gastronómicas (Formal 3 Pasos, Finger Food, Buffet Criollo o Personalizado) con cálculo diferencial automático para comensales celíacos / Sin TACC (+35% por protocolo de elaboración cuidada).
+2. **Personal de cocina discriminado:** Cálculo individualizado entre **Cocineros Familiares**, **Cocineros Externos** (tarifa chef calificado $\times 1.5$) y **Ayudantes Externos** ($\times 1.2$), contratados por jornadas completas (8 hs) o por horas directas de producción.
+3. **Personal de salón (Mozos):** Sugerencia algorítmica de dotación según tipo de servicio (al plato: 1/24, finger food: 1/35, buffet: 1/40), distinguiendo atención familiar de mozos externos contratados ($\times 1.1$).
+4. **Logística y traslado:** Estimación de combustible para vehículo utilitario (Fiat Toro 1.3T Nafta: 8.5 km/l + 30% de amortización/desgaste) o cotización fija mediante flete contratado.
+5. **Insumos invisibles detallados:** Detección y prorrateo automático de **Descartables y Gas envasado** (10%), **Limpieza e higiene** (2%) y **Otros** (roturas de vajilla, reposición de cristalería y contingencias: 3%).
+6. **Margen financiero real sobre venta:** Aplicación del principio contable:
+   $$\text{Precio Final} = \frac{\text{Costo Total}}{1 - \text{Margen}}$$
+7. **Control Humano (*Human-in-the-loop*):** Panel interactivo donde la familia decide qué tareas propias facturar y cuáles ceder, visibilizando en pantalla el monto exacto absorbido para evitar la autoexplotación familiar.
+8. **Generador de Propuesta Comercial (PDF):** Sistema de impresión desacoplado en formato A4 (15 mm de margen perimetral) calibrado para emitir presupuestos limpios en 1 sola carilla, compatible con PC y navegadores móviles (Android/iOS), sin exponer costos internos ni márgenes confidenciales.
 
 ---
 
 ## 🎯 ¿Para qué sirve?
 
-* **Reduce los tiempos de respuesta:** Pasa de 2 horas de cálculos manuales con papel y calculadora a cotizaciones completas en menos de 3 minutos.
-* **Elimina la autoexplotación familiar:** Visibiliza el costo del trabajo propio de los integrantes del emprendimiento, evitando la falsa percepción de ganancia.
-* **Protege frente a la inflación:** Fija una vigencia de oferta (predeterminada) con una seña sugerida y cláusula de reajuste del saldo por Canasta Básica de Alimentos o IPC.
-* **Profesionaliza la venta:** Permite emitir una propuesta formal imprimible/PDF con membrete institucional para evitar cotizaciones informales por WhatsApp.
+* **Agiliza los tiempos comerciales:** Reduce el tiempo de presupuestación de más de 2 horas de cálculos manuales a menos de 3 minutos.
+* **Transparencia económica familiar:** Cuantifica monetariamente las horas de elaboración y salón aportadas por los integrantes de la familia.
+* **Flexibilidad comercial y protección inflacionaria:** Permite definir la vigencia de la oferta mes a mes de forma personalizada (sin plazos predeterminados forzados), calculando un anticipo de seña (20%) y estableciendo cláusulas de reajuste del saldo pendiente por IPC o Canasta Básica de Alimentos.
+* **Presentación ejecutiva y profesional:** Genera un presupuesto formal listo para descargar y enviar por WhatsApp o correo electrónico, eliminando la informalidad de cotizaciones por mensajes de texto.
 
 ---
 
-## ⚙️ Arquitectura de la Solución (Costo Operativo $0)
+## ⚙️ Arquitectura Técnica y Portabilidad (Costo Operativo $0)
 
-El proyecto está diseñado bajo una arquitectura ligera y escalable que no genera costos de mantenimiento:
-
-* **Frontend:** HTML5, CSS3 moderno y JavaScript Vanilla (sin frameworks pesados ni dependencias externas).
-* **Persistencia Local:** `localStorage` del navegador y descarga de archivos de configuración en formato `.json`.
-* **Backend Cloud:** Endpoint serverless en Google Apps Script que añade automáticamente cada cotización emitida a una hoja de cálculo en Google Sheets.
+Diseñado con un enfoque de arquitectura liviana, portable y con costo de mantenimiento cero:
+* **Frontend Nativo:** Construido en HTML5 semántico, CSS3 moderno con variables y grillas simétricas adaptables, y Vanilla JavaScript puro (sin frameworks pesados ni dependencias externas frágiles).
+* **Almacenamiento Local Autónomo:** Utiliza el motor de `localStorage` del navegador para recordar parámetros y tarifas sin requerir bases de datos remotas ni servidores pagos.
+* **Portabilidad y Respaldo de Datos:** Incorpora botones simplificados (*“Respaldar en archivo las configuraciones”* y *“Cargar archivo de configuraciones”*) que generan un archivo de texto descargable en la carpeta local, permitiendo trasladar las tarifas por WhatsApp o mail a cualquier celular o computadora sin complicaciones técnicas.
+* **Impresión Desacoplada A4:** Motor CSS `@media print` optimizado que aísla la hoja comercial del resto de la interfaz, asegurando márgenes simétricos y eliminando páginas en blanco innecesarias.
 
 ---
 
 ## 🚀 ¿Cómo se usa?
 
-### 1. Pestaña: Configuración de Tarifas
-* Se ingresa el **Valor Hora Base** (anclado habitualmente a la referencia del servicio doméstico).
-* Se configuran los **multiplicadores salariales**: Cocinero (`1.5`), Ayudante (`1.2`) y Mozo (`1.1`).
-* Se revisan los costos de menús por persona, combustible, porcentajes de costos invisibles y margen comercial deseado.
-* Se presiona **Guardar Configuración de Tarifas**. Los datos quedan memorizados en el dispositivo.
-* *(Opcional)* Se puede descargar una copia de seguridad con el botón **Respaldar Parámetros (JSON)** para trasladar los valores a otra computadora o celular.
-
-### 2. Pestaña: Ficha del Servicio
-* Se completan los datos del evento: cliente, cantidad de comensales y tipo de menú (Formal, Finger Food o Buffet).
-* Se ingresa si existen comensales con menús especiales (celíacos / sin TACC).
-* Se define el personal de cocina (cuántos familiares y cuántos ayudantes externos, por horas o por jornadas completas).
-* Se revisa la dotación sugerida de mozos y las horas de duración del evento (por defecto 6 hs).
-* Se seleccionan las condiciones logísticas (vehículo propio indicando kilómetros o contratación de flete externo).
-* Se presiona **Calcular Cotización**.
-
-### 3. Pestaña: Cotización & Decisiones
-* El sistema muestra el desglose completo del costo directo, logístico e invisible.
-* **Panel de Control Familiar:** Permite marcar o desmarcar el cobro de la mano de obra propia. Si la familia decide no cobrarse, el calculador advierte cuánto dinero propio están absorbiendo para beneficiar al cliente.
-* Muestra el precio sugerido por comensal, el precio final y la seña requerida (20%).
-* **Acciones disponibles:**
-  * **Guardar en Google Sheets:** Envía el registro a la planilla compartida en la nube.
-  * **Imprimir Presupuesto Formal (PDF):** Genera la vista limpia comercial lista para enviar al cliente.
+1. **Configuración de Tarifas (Pestaña 1):**
+   * Se ajusta el Valor Hora Base (referencia salarial anclada a servicio doméstico) y los multiplicadores de oficio.
+   * Se fijan los costos de menús, combustible y porcentajes de insumos invisibles.
+   * Se guarda la configuración en el dispositivo o se descarga una copia de respaldo.
+2. **Ficha del Servicio (Pestaña 2):**
+   * Los campos de entrada vienen limpios para evitar confusiones operativas.
+   * Se ingresa el cliente, comensales totales, celíacos y tipo de menú.
+   * Se completa la dotación de cocina (familiares, cocineros externos y ayudantes) y personal de mozos.
+   * Se define si requiere armado previo de salón (4 hs), logística y el plazo de vigencia deseado (definido por el usuario en cada cotización).
+   * Se presiona **🧮 Calcular Cotización**.
+3. **Cotización & Propuesta Comercial (Pestaña 3):**
+   * Se evalúa el desglose de costos directos e invisibles.
+   * Se utiliza el panel de decisiones para seleccionar qué mano de obra trasladar al precio de venta.
+   * Se presiona **📄 Ver Propuesta Formal para el Cliente (PDF)** y luego **🖨️ Descargar en PDF / Imprimir** para emitir el presupuesto formal.
 
 ---
 
 ## 📂 Estructura del Repositorio
 
 ```text
-├── index.html              # Aplicación web completa (Frontend + Lógica de cálculo)
+├── index.html              # Aplicación web completa (Frontend, motor de costeo y módulo de impresión)
 ├── logo.png                # Isologotipo oficial de Buenos Momentos Eventos
-├── backend.gs              # Código de Google Apps Script para recibir datos en Sheets
 ├── README.md               # Documentación general del proyecto (este archivo)
 └── docs/
-    └── Informe_Final.pdf   # Documento académico formal para la FCE-UBA
+    └── Informe_Final.pdf   # Documento académico formal presentado ante la FCE-UBA
